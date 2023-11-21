@@ -123,6 +123,64 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &318076432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8252238961544686069, guid: 58f62a7a097624149b746e22965b5d99, type: 3}
+  m_PrefabInstance: {fileID: 7829580719283182980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &318076433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318076432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f0f49d4f520c449a1ccd7e0ed7ccf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
+  movementSpeed: 10
+--- !u!114 &318076434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318076432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435c404a05664af449ea1e81b50260d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementBehaviour: {fileID: 0}
+--- !u!143 &318076435
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318076432}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +288,7 @@ GameObject:
   - component: {fileID: 858895450}
   - component: {fileID: 858895449}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +435,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8252238961544686069, guid: 58f62a7a097624149b746e22965b5d99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 318076435}
+    - targetCorrespondingSourceObject: {fileID: 8252238961544686069, guid: 58f62a7a097624149b746e22965b5d99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 318076434}
+    - targetCorrespondingSourceObject: {fileID: 8252238961544686069, guid: 58f62a7a097624149b746e22965b5d99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 318076433}
   m_SourcePrefab: {fileID: 100100000, guid: 58f62a7a097624149b746e22965b5d99, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
