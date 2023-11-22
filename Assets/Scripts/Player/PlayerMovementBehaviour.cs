@@ -1,24 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovementBehaviour : MonoBehaviour
 {
     [Header("Components References")]
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] CharacterController characterController;
     [Header("Movement Settings")]
-    [SerializeField] private float movementSpeed = 10f;
-
+    [SerializeField] float movementSpeed = 10f;
+    private Vector3 movementDirection;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
     }
-    public void OnMove(Vector2 input)
+    private void FixedUpdate()
     {
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
-        characterController.Move(transform.TransformDirection(moveDirection) * movementSpeed * Time.deltaTime);
+        MoveThePlayer();
+    }
+    public void MoveThePlayer()
+    {
+        characterController.Move(transform.TransformDirection(movementDirection) * movementSpeed * Time.deltaTime);
+    }
+
+    public void PerformeJump()
+    {
+
+    }
+
+
+    public void UpdateMovementData(Vector3 movementDirection)
+    {
+        this.movementDirection = movementDirection;
     }
 }
