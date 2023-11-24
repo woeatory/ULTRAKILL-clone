@@ -4,45 +4,44 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Component References")]
     [SerializeField] PlayerMovementBehaviour playerMovementBehaviour;
-    private PlayerControls playerControls;
-    private PlayerControls.GameplayActions gameplay;
+    [SerializeField] PlayerLook playerLook;
     private Vector3 rawInputMovement;
-    private void Awake()
+    private Vector2 mouseLookDirection;
+    private void Start()
     {
-        playerControls = new PlayerControls();
-        gameplay = playerControls.gameplay;
         playerMovementBehaviour = GetComponent<PlayerMovementBehaviour>();
-        // add callback methods, when it is perfomed
-        gameplay.Jump.performed += OnJump;
-        gameplay.Movement.performed += OnMovement;
+        playerLook = GetComponent<PlayerLook>();
     }
     private void Update()
     {
         UpdatePlayerMovement();
+        UpdateMouseLook();
     }
-    
+
     private void UpdatePlayerMovement()
     {
         playerMovementBehaviour.UpdateMovementData(rawInputMovement);
     }
-    private void OnMovement(InputAction.CallbackContext context)
+    private void UpdateMouseLook()
+    {
+        playerLook.UpdateMousePosition(mouseLookDirection);
+    }
+    public void OnMovement(InputAction.CallbackContext context)
     {
         Debug.Log("OnMovement");
         Vector2 inputMovement = context.ReadValue<Vector2>();
         rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
     }
-    private void OnJump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
         Debug.Log("OnJump");
-        if (context.performed) { playerMovementBehaviour.PerformeJump(); }
+        playerMovementBehaviour.PerformeJump();
     }
-    private void OnEnable()
+    public void OnLook(InputAction.CallbackContext context)
     {
-        gameplay.Enable();
-    }
-
-    private void OnDisable()
-    {
-        gameplay.Disable();
+        Debug.Log("OnLook");
+        Vector2 inputLook = context.ReadValue<Vector2>();
+        mouseLookDirection = inputLook;
+        Debug.Log(mouseLookDirection);
     }
 }
