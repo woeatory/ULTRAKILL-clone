@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     {
         playerMovementBehaviour.PerformeJump();
     }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        playerMovementBehaviour.PerformeDash();
+    }
     public void OnLook(InputAction.CallbackContext context)
     {
         Vector2 inputLook = context.ReadValue<Vector2>();

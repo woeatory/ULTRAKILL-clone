@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerMovementBehaviour : MonoBehaviour
@@ -8,8 +10,13 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float fallingSpeed = -4.5f;
     [SerializeField] float jumpForce = 1f;
+    [SerializeField] float dashDistance = 15f;
+    [SerializeField] float dashDuration = 0.35f;
+    [SerializeField] float dashCounterResetTime = 1.75f;
+    private int dashCounter = 3;
     private float _playerYAxisVelocity;
     private Vector3 _movementDirection;
+    private bool isDashing = false;
 
     private void Start()
     {
@@ -38,7 +45,36 @@ public class PlayerMovementBehaviour : MonoBehaviour
             _playerYAxisVelocity = Mathf.Sqrt(jumpForce * -3.0f * fallingSpeed);
         }
     }
-
+    public void PerformeDash()
+    {
+        // todo: improve charge reset
+        if (isDashing || dashCounter == 0) { return; }
+        isDashing = true;
+        dashCounter--;
+        var dashDirection = new Vector3(_movementDirection.x, 0f, _movementDirection.z);
+        if (dashDirection == Vector3.zero)
+        {
+            dashDirection = transform.forward;
+        }
+        StartCoroutine(Dash(dashDirection));
+        Invoke("ResetDashCounter", dashCounterResetTime);
+    }
+    private IEnumerator Dash(Vector3 dashDirection)
+    {
+        Debug.Log("Start dashing");
+        float startTime = Time.time;
+        while (Time.time < dashDuration + startTime)
+        {
+            characterController.Move(dashDirection * dashDistance * Time.deltaTime);
+            yield return null;
+        }
+        isDashing = false;
+        Debug.Log("Finished dashing");
+    }
+    private void ResetDashCounter()
+    {
+        dashCounter++;
+    }
     private void ApplyGravity()
     {
         if (characterController.isGrounded && _playerYAxisVelocity < 0)

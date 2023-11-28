@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 2548627683041965819}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165,8 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f0f49d4f520c449a1ccd7e0ed7ccf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 1829920036326092767}
+  characterController: {fileID: 0}
   movementSpeed: 10
+  fallingSpeed: -4.5
+  jumpForce: 1
+  dashDistance: 5
+  dashDuration: 0.2
 --- !u!114 &3945153868902690616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,10 +243,6 @@ MonoBehaviour:
     m_ActionId: 718740bb-0174-4c88-9f5f-db2da942f93d
     m_ActionName: gameplay/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5303435d-1581-4f05-acb4-87d72620aa70
-    m_ActionName: gameplay/Dash[/Keyboard/leftShift]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7655406941729597785}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
@@ -258,6 +258,22 @@ MonoBehaviour:
         m_CallState: 1
     m_ActionId: d506d2af-537d-48bb-8067-8c1fe2fcc386
     m_ActionName: gameplay/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7655406941729597785}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7097117b-d2b9-4eca-a881-d1ee63c25bf4
+    m_ActionName: gameplay/Dash[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: gameplay
