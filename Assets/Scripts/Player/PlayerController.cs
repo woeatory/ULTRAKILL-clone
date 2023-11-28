@@ -28,20 +28,16 @@ public class PlayerController : MonoBehaviour
     }
     public void OnMovement(InputAction.CallbackContext context)
     {
-        Debug.Log("OnMovement");
         Vector2 inputMovement = context.ReadValue<Vector2>();
         rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        Debug.Log("OnJump");
         playerMovementBehaviour.PerformeJump();
     }
     public void OnLook(InputAction.CallbackContext context)
     {
-        Debug.Log("OnLook");
         Vector2 inputLook = context.ReadValue<Vector2>();
         mouseLookDirection = inputLook;
-        Debug.Log(mouseLookDirection);
     }
 }

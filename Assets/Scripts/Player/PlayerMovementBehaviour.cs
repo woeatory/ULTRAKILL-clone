@@ -7,9 +7,9 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float fallingSpeed = -4.5f;
+    [SerializeField] float jumpForce = 1f;
     private float _playerYAxisVelocity;
     private Vector3 _movementDirection;
-    private bool isGrounded;
 
     private void Start()
     {
@@ -24,6 +24,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     {
         _movementDirection.x *= movementSpeed;
         _movementDirection.z *= movementSpeed;
+        _movementDirection.y = _playerYAxisVelocity;
         characterController.Move(_movementDirection * Time.deltaTime);
     }
     public void UpdateMovementData(Vector3 movementDirection)
@@ -32,18 +33,18 @@ public class PlayerMovementBehaviour : MonoBehaviour
     }
     public void PerformeJump()
     {
-
+        if (characterController.isGrounded)
+        {
+            _playerYAxisVelocity = Mathf.Sqrt(jumpForce * -3.0f * fallingSpeed);
+        }
     }
 
     private void ApplyGravity()
     {
-        isGrounded = characterController.isGrounded;
-        Debug.Log(isGrounded);
-        if (isGrounded && _playerYAxisVelocity < 0)
+        if (characterController.isGrounded && _playerYAxisVelocity < 0)
         {
             _playerYAxisVelocity = -2f;
-        } 
-        _playerYAxisVelocity = fallingSpeed;
-        _movementDirection.y = _playerYAxisVelocity;
+        }
+        _playerYAxisVelocity += fallingSpeed * Time.deltaTime;
     }
 }

@@ -18,7 +18,7 @@ public class PlayerLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         RotateCamera();
     }
