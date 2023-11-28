@@ -9,7 +9,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float fallingSpeed = -4.5f;
-    [SerializeField] float jumpForce = 1f;
+    [SerializeField] float jumpForce = 2f;
     [SerializeField] float dashDistance = 15f;
     [SerializeField] float dashDuration = 0.35f;
     [SerializeField] float dashCounterResetTime = 1.75f;
