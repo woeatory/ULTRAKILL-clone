@@ -25,9 +25,9 @@ public class PlayerMovementBehaviour : MonoBehaviour
     private void Update()
     {
         ApplyGravity();
-        MoveThePlayer();
+        MovePlayer();
     }
-    private void MoveThePlayer()
+    private void MovePlayer()
     {
         _movementDirection.x *= movementSpeed;
         _movementDirection.z *= movementSpeed;
@@ -61,7 +61,6 @@ public class PlayerMovementBehaviour : MonoBehaviour
     }
     private IEnumerator Dash(Vector3 dashDirection)
     {
-        Debug.Log("Start dashing");
         float startTime = Time.time;
         while (Time.time < dashDuration + startTime)
         {
@@ -69,7 +68,6 @@ public class PlayerMovementBehaviour : MonoBehaviour
             yield return null;
         }
         isDashing = false;
-        Debug.Log("Finished dashing");
     }
     private void ResetDashCounter()
     {

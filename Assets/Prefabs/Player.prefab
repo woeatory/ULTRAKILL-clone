@@ -168,9 +168,10 @@ MonoBehaviour:
   characterController: {fileID: 0}
   movementSpeed: 10
   fallingSpeed: -4.5
-  jumpForce: 1
-  dashDistance: 5
-  dashDuration: 0.2
+  jumpForce: 2
+  dashDistance: 15
+  dashDuration: 0.35
+  dashCounterResetTime: 1.75
 --- !u!114 &3945153868902690616
 MonoBehaviour:
   m_ObjectHideFlags: 0
