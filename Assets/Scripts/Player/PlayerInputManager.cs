@@ -34,11 +34,12 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        playerController.PerformeJump();
+        playerController.PerformJump();
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        playerController.PerformDash();
     }
     public void OnLook(InputAction.CallbackContext context)
     {
