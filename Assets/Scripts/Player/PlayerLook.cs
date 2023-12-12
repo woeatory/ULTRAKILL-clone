@@ -7,14 +7,14 @@ public class PlayerLook : MonoBehaviour
     [Header("Camera Sensitivity Settings")]
     [SerializeField] float xSensitivity = 5f;
     [SerializeField] float ySensitivity = 5f;
-    private Camera _camera;
-    private float _xMousePos, _yMousePos, _xRotation = 0f;
+    private Camera mainCamera;
+    private float xMousePos, yMousePos, xRotation = 0f;
     private const float MIN_CLAMP = -90f;
     private const float MAX_CLAMP = 90f;
 
     private void Start()
     {
-        _camera = Camera.main;
+        mainCamera = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -25,14 +25,14 @@ public class PlayerLook : MonoBehaviour
 
     public void RotateCamera()
     {
-        _camera.transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * _xMousePos);
+        mainCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * xMousePos);
     }
     public void UpdateMousePosition(Vector2 mouseInput)
     {
-        _xMousePos = mouseInput.x * xSensitivity * Time.deltaTime;
-        _yMousePos = mouseInput.y * ySensitivity * Time.deltaTime;
-        _xRotation -= _yMousePos;
-        _xRotation = Mathf.Clamp(_xRotation, MIN_CLAMP, MAX_CLAMP);
+        xMousePos = mouseInput.x * xSensitivity * Time.deltaTime;
+        yMousePos = mouseInput.y * ySensitivity * Time.deltaTime;
+        xRotation -= yMousePos;
+        xRotation = Mathf.Clamp(xRotation, MIN_CLAMP, MAX_CLAMP);
     }
 }

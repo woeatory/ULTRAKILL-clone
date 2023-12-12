@@ -1,48 +1,106 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
+[RequireComponent(typeof(PlayerInputManager), typeof(PlayerInputManager), typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Component References")]
-    [SerializeField] PlayerMovementBehaviour playerMovementBehaviour;
+    [SerializeField] PlayerInputManager playerInputManager;
     [SerializeField] PlayerLook playerLook;
-    private Vector3 rawInputMovement;
+    private PlayerStateMachine playerStateMachine;
+    // Movement
+    private Vector3 movementDirection;
+    private Vector3 movementVelocity;
+    public float PlayerYAxisVelocity { get; set; }
+
     private Vector2 mouseLookDirection;
-    private void Start()
+    [Header("Movement Settings")]
+    [SerializeField] float movementSpeed = 10f;
+    public float fallingSpeed = -4.5f;
+    public float jumpForce = 2f;
+    public CharacterController CharController => characterController;
+    public PlayerStateMachine PlayerStateMachine => playerStateMachine;
+    public bool IsDashing { get; set; }
+    public int dashCounter = 3;
+    [SerializeField] float dashDuration = 0.35f;
+    [SerializeField] float dashDistance = 25f;
+    [SerializeField] float dashCounterResetTime = 1.75f;
+    [SerializeField] Vector3 dashDirection;
+    private CharacterController characterController;
+    private void Awake()
     {
-        playerMovementBehaviour = GetComponent<PlayerMovementBehaviour>();
+        playerInputManager = GetComponent<PlayerInputManager>();
         playerLook = GetComponent<PlayerLook>();
+        characterController = GetComponent<CharacterController>();
+        playerStateMachine = new PlayerStateMachine(characterController, this);
     }
+
     private void Update()
     {
-        UpdatePlayerMovement();
-        UpdateMouseLook();
+        playerStateMachine.Update();
+
+    }
+    private void LateUpdate()
+    {
+        CalculateVertical();
+        Move();
+    }
+    public void UpdatePlayerMovement(Vector3 inputMovement)
+    {
+        movementDirection = inputMovement;
+        movementDirection = transform.right * movementDirection.x + transform.forward * movementDirection.z;
+    }
+    public void PerformJump()
+    {
+        playerStateMachine.TransitionTo(new JumpState());
+    }
+    private void Move()
+    {
+        if (!IsDashing)
+        {
+            movementVelocity.x = movementDirection.x * movementSpeed;
+            movementVelocity.z = movementDirection.z * movementSpeed;
+        }
+        movementVelocity.y = PlayerYAxisVelocity;
+        characterController.Move(movementVelocity * Time.deltaTime);
     }
 
-    private void UpdatePlayerMovement()
+    private void CalculateVertical()
     {
-        playerMovementBehaviour.UpdateMovementData(rawInputMovement);
-    }
-    private void UpdateMouseLook()
-    {
-        playerLook.UpdateMousePosition(mouseLookDirection);
-    }
-    public void OnMovement(InputAction.CallbackContext context)
-    {
-        Vector2 inputMovement = context.ReadValue<Vector2>();
-        rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
-    }
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        playerMovementBehaviour.PerformeJump();
+        if (characterController.isGrounded && PlayerYAxisVelocity < 0)
+        {
+            PlayerYAxisVelocity = -2f;
+        }
+        PlayerYAxisVelocity += fallingSpeed * Time.deltaTime;
     }
 
-    public void OnDash(InputAction.CallbackContext context)
+    public void PerformDash()
     {
-        playerMovementBehaviour.PerformeDash();
+        // todo: improve charge reset
+        if (IsDashing || dashCounter == 0) { return; }
+        IsDashing = true;
+        dashCounter--;
+        dashDirection = new Vector3(movementDirection.x, 0f, movementDirection.z);
+        if (dashDirection == Vector3.zero)
+        {
+            dashDirection = transform.forward;
+        }
+        StartCoroutine(Dash(dashDirection));
+        Invoke("ResetDashCounter", dashCounterResetTime);
     }
-    public void OnLook(InputAction.CallbackContext context)
+    private IEnumerator Dash(Vector3 dashDirection)
     {
-        Vector2 inputLook = context.ReadValue<Vector2>();
-        mouseLookDirection = inputLook;
+        float startTime = Time.time;
+        while (Time.time < dashDuration + startTime)
+        {
+            characterController.Move(dashDirection * dashDistance * Time.deltaTime);
+            yield return null;
+        }
+        IsDashing = false;
+    }
+    private void ResetDashCounter()
+    {
+        dashCounter++;
     }
 }
