@@ -9,17 +9,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInputManager playerInputManager;
     [SerializeField] PlayerLook playerLook;
     private PlayerStateMachine playerStateMachine;
+    public CharacterController characterController;
     // Movement
-    private Vector3 movementDirection;
-    private Vector3 movementVelocity;
-    public float PlayerYAxisVelocity { get; set; }
+    public Vector3 movementDirection;
+    public Vector3 movementVelocity;
 
     private Vector2 mouseLookDirection;
     [Header("Movement Settings")]
-    [SerializeField] float movementSpeed = 10f;
+    public float movementSpeed = 10f;
     public float fallingSpeed = -4.5f;
     public float jumpForce = 2f;
-    public CharacterController CharController => characterController;
+    public float jumpMultiplier = -3f;
+
     public PlayerStateMachine PlayerStateMachine => playerStateMachine;
     public bool IsDashing { get; set; }
     public int dashCounter = 3;
@@ -27,24 +28,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashDistance = 25f;
     [SerializeField] float dashCounterResetTime = 1.75f;
     [SerializeField] Vector3 dashDirection;
-    private CharacterController characterController;
+
     private void Awake()
     {
         playerInputManager = GetComponent<PlayerInputManager>();
         playerLook = GetComponent<PlayerLook>();
         characterController = GetComponent<CharacterController>();
-        playerStateMachine = new PlayerStateMachine(characterController, this);
+        playerStateMachine = new PlayerStateMachine(this);
     }
 
     private void Update()
     {
         playerStateMachine.Update();
-
-    }
-    private void LateUpdate()
-    {
-        CalculateVertical();
-        Move();
     }
     public void UpdatePlayerMovement(Vector3 inputMovement)
     {
@@ -53,26 +48,10 @@ public class PlayerController : MonoBehaviour
     }
     public void PerformJump()
     {
-        playerStateMachine.TransitionTo(new JumpState());
-    }
-    private void Move()
-    {
-        if (!IsDashing)
+        if (playerStateMachine.CurrentPlayerState is GroundedState)
         {
-            movementVelocity.x = movementDirection.x * movementSpeed;
-            movementVelocity.z = movementDirection.z * movementSpeed;
+            playerStateMachine.TransitionTo(new JumpState());
         }
-        movementVelocity.y = PlayerYAxisVelocity;
-        characterController.Move(movementVelocity * Time.deltaTime);
-    }
-
-    private void CalculateVertical()
-    {
-        if (characterController.isGrounded && PlayerYAxisVelocity < 0)
-        {
-            PlayerYAxisVelocity = -2f;
-        }
-        PlayerYAxisVelocity += fallingSpeed * Time.deltaTime;
     }
 
     public void PerformDash()

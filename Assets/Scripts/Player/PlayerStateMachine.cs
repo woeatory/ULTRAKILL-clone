@@ -5,25 +5,15 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
-    public CharacterController characterController;
     public PlayerController playerController;
-    [Header("Movement Settings")]
-    [SerializeField] float movementSpeed = 10f;
-    public float fallingSpeed = -4.5f;
-    public float jumpForce = 2f;
 
-    public Vector3 movementDirection = Vector3.zero;
     public PlayerState CurrentPlayerState { get; set; }
     public event Action<PlayerState> stateChanged;
-
-    // getters/setters
-    public float MovementSpeed => movementSpeed;
     
-    public PlayerStateMachine(CharacterController characterController, PlayerController playerController)
+    public PlayerStateMachine(PlayerController playerController)
     {
-        this.characterController = characterController;
         this.playerController = playerController;
-        Initialize(new WalkState());
+        Initialize(new GroundedState());
     }
     public void Initialize(PlayerState playerState)
     {
@@ -44,9 +34,6 @@ public class PlayerStateMachine
     }
     public void Update()
     {
-        if (CurrentPlayerState != null)
-        {
-            CurrentPlayerState.Update(this);
-        }
+        CurrentPlayerState?.Update(this);
     }
 }
