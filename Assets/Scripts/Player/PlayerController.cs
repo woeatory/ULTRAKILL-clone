@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
     // Movement
     public Vector3 movementDirection;
-    public Vector3 movementVelocity;
+    public Vector3 playerVelocity;
 
     private Vector2 mouseLookDirection;
     [Header("Movement Settings")]

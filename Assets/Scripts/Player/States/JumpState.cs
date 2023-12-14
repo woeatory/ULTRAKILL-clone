@@ -14,7 +14,7 @@ public class JumpState : PlayerState
 
     private void PerformeJump(PlayerStateMachine context)
     {
-        context.playerController.movementVelocity.y = Mathf.Sqrt(context.playerController.jumpForce * context.playerController.jumpMultiplier * context.playerController.fallingSpeed);
+        context.playerController.playerVelocity.y = Mathf.Sqrt(context.playerController.jumpForce * context.playerController.jumpMultiplier * context.playerController.fallingSpeed);
     }
     public override void CheckIfSwitchState(PlayerStateMachine context) { }
 

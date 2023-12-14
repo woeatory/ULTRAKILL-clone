@@ -12,9 +12,8 @@ public class AerialState : PlayerState
 
     public override void Update(PlayerStateMachine context)
     {
-
-        CheckIfSwitchState(context);
         MoveCharacter(context);
+        CheckIfSwitchState(context);
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
@@ -27,10 +26,10 @@ public class AerialState : PlayerState
     {
         if (!context.playerController.IsDashing)
         {
-            context.playerController.movementVelocity.x = context.playerController.movementDirection.x * context.playerController.movementSpeed;
-            context.playerController.movementVelocity.z = context.playerController.movementDirection.z * context.playerController.movementSpeed;
+            context.playerController.playerVelocity.x = context.playerController.movementDirection.x * context.playerController.movementSpeed;
+            context.playerController.playerVelocity.z = context.playerController.movementDirection.z * context.playerController.movementSpeed;
         }
-        context.playerController.movementVelocity.y += context.playerController.fallingSpeed * Time.deltaTime;
-        context.playerController.characterController.Move(context.playerController.movementVelocity * Time.deltaTime);
+        context.playerController.playerVelocity.y += context.playerController.fallingSpeed * Time.deltaTime;
+        context.playerController.characterController.Move(context.playerController.playerVelocity * Time.deltaTime);
     }
 }
