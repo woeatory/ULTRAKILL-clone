@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputManager), typeof(PlayerInputManager), typeof(CharacterController))]
@@ -7,9 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Component References")]
     [SerializeField] PlayerInputManager playerInputManager;
-    [SerializeField] PlayerLook playerLook;
     private PlayerStateMachine playerStateMachine;
     public CharacterController characterController;
+    private GameObject foot;
     // Movement
     public Vector3 movementDirection;
     public Vector3 playerVelocity;
@@ -21,9 +20,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 2f;
     public float jumpMultiplier = -3f;
     public float slamForce = 25f;
-
+    public float slideSpeed = 20f;
+    public float GroundedYAxixVelocity {get;} = -2f;
     public PlayerStateMachine PlayerStateMachine => playerStateMachine;
-    public bool IsDashing { get; set; }
+    public bool IsGrounded => characterController.isGrounded;
+    [SerializeField] public bool IsDashing { get; set; }
+    [SerializeField] public bool IsSliding;
     public int dashCounter = 3;
     [SerializeField] float dashDuration = 0.35f;
     [SerializeField] float dashDistance = 25f;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerInputManager = GetComponent<PlayerInputManager>();
-        playerLook = GetComponent<PlayerLook>();
+        foot = GameObject.Find("Foot");
         characterController = GetComponent<CharacterController>();
         playerStateMachine = new PlayerStateMachine(this);
     }
@@ -46,13 +48,6 @@ public class PlayerController : MonoBehaviour
     {
         movementDirection = inputMovement;
         movementDirection = transform.right * movementDirection.x + transform.forward * movementDirection.z;
-    }
-    public void PerformJump()
-    {
-        if (playerStateMachine.CurrentPlayerState is GroundedState)
-        {
-            playerStateMachine.TransitionTo(new JumpState());
-        }
     }
 
     public void PerformDash()
@@ -83,4 +78,6 @@ public class PlayerController : MonoBehaviour
     {
         dashCounter++;
     }
+
+    
 }

@@ -1,11 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundedState : PlayerState
 {
     public override void Enter(PlayerStateMachine context)
     {
-        context.playerController.playerVelocity.y = 0f;
+        context.playerController.playerVelocity.y = context.playerController.GroundedYAxixVelocity;
     }
 
     public override void Exit(PlayerStateMachine context) { }
@@ -17,7 +16,7 @@ public class GroundedState : PlayerState
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
-        if (!context.playerController.characterController.isGrounded)
+        if (!context.playerController.IsGrounded)
         {
             context.TransitionTo(new AerialState());
         }

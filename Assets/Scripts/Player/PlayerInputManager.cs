@@ -34,7 +34,14 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        playerController.PerformJump();
+        if (context.started)
+        {
+            Debug.Log("Jump pressed");
+            if (playerController.characterController.isGrounded)
+            {
+                playerController.PlayerStateMachine.TransitionTo(new JumpState());
+            }
+        }
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -43,13 +50,17 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void OnSlide(InputAction.CallbackContext context)
     {
-        if (playerController.PlayerStateMachine.CurrentPlayerState is AerialState)
+        if (!playerController.IsGrounded)
         {
             playerController.PlayerStateMachine.TransitionTo(new SlamState());
         }
-        else if (playerController.PlayerStateMachine.CurrentPlayerState is GroundedState)
+        else if (playerController.IsGrounded)
         {
-
+            playerController.PlayerStateMachine.TransitionTo(new SlideState());
+        }
+        if (context.canceled)
+        {
+            playerController.IsSliding = false;
         }
     }
     public void OnLook(InputAction.CallbackContext context)

@@ -276,7 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInputManager: {fileID: 0}
-  playerLook: {fileID: 0}
   characterController: {fileID: 0}
   movementDirection: {x: 0, y: 0, z: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
@@ -285,6 +284,8 @@ MonoBehaviour:
   jumpForce: 5
   jumpMultiplier: -3
   slamForce: 25
+  slideSpeed: 20
+  isSliding: 0
   dashCounter: 3
   dashDuration: 0.35
   dashDistance: 25

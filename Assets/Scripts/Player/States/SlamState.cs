@@ -16,16 +16,14 @@ public class SlamState : PlayerState
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
-        if (context.playerController.characterController.isGrounded)
+        if (context.playerController.IsGrounded)
         {
-            context.TransitionTo(new GroundedState());
+            context.TransitionTo(new SlideState());
         }
     }
     private void PerformSlam(PlayerStateMachine context)
     {
         context.playerController.playerVelocity = Vector3.zero;
-        Debug.Log(-context.playerController.slamForce);
         context.playerController.playerVelocity.y = -context.playerController.slamForce;
-
     }
 }
