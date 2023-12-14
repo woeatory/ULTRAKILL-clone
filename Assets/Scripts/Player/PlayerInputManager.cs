@@ -41,6 +41,17 @@ public class PlayerInputManager : MonoBehaviour
     {
         playerController.PerformDash();
     }
+    public void OnSlide(InputAction.CallbackContext context)
+    {
+        if (playerController.PlayerStateMachine.CurrentPlayerState is AerialState)
+        {
+            playerController.PlayerStateMachine.TransitionTo(new SlamState());
+        }
+        else if (playerController.PlayerStateMachine.CurrentPlayerState is GroundedState)
+        {
+
+        }
+    }
     public void OnLook(InputAction.CallbackContext context)
     {
         Vector2 inputLook = context.ReadValue<Vector2>();

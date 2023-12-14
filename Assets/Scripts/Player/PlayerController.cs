@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float fallingSpeed = -4.5f;
     public float jumpForce = 2f;
     public float jumpMultiplier = -3f;
+    public float slamForce = 25f;
 
     public PlayerStateMachine PlayerStateMachine => playerStateMachine;
     public bool IsDashing { get; set; }

@@ -242,6 +242,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7097117b-d2b9-4eca-a881-d1ee63c25bf4
     m_ActionName: gameplay/Dash[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4391474859868020798}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnSlide
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 765eb461-bc56-4a2c-9f34-5484e4c796b0
+    m_ActionName: gameplay/Slide[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: gameplay
@@ -261,13 +277,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputManager: {fileID: 0}
   playerLook: {fileID: 0}
+  characterController: {fileID: 0}
+  movementDirection: {x: 0, y: 0, z: 0}
+  playerVelocity: {x: 0, y: 0, z: 0}
   movementSpeed: 10
   fallingSpeed: -4.5
-  jumpForce: 2
+  jumpForce: 5
+  jumpMultiplier: -3
+  slamForce: 25
   dashCounter: 3
   dashDuration: 0.35
-  dashDistance: 15
+  dashDistance: 25
   dashCounterResetTime: 1.75
+  dashDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &4391474859868020798
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ public class AerialState : PlayerState
 {
     public override void Enter(PlayerStateMachine context)
     {
-
     }
 
     public override void Exit(PlayerStateMachine context) { }
@@ -12,8 +11,8 @@ public class AerialState : PlayerState
 
     public override void Update(PlayerStateMachine context)
     {
-        MoveCharacter(context);
         CheckIfSwitchState(context);
+        MoveCharacter(context);
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
