@@ -4,7 +4,7 @@ public class GroundedState : PlayerState
 {
     public override void Enter(PlayerStateMachine context)
     {
-        context.playerController.movementDirection.y = 0;
+        context.playerController.playerVelocity.y = context.playerController.GroundedYAxixVelocity;
     }
 
     public override void Exit(PlayerStateMachine context) { }
@@ -16,7 +16,7 @@ public class GroundedState : PlayerState
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
-        if (!context.playerController.characterController.isGrounded)
+        if (!context.playerController.IsGrounded)
         {
             context.TransitionTo(new AerialState());
         }
@@ -25,10 +25,10 @@ public class GroundedState : PlayerState
     {
         if (!context.playerController.IsDashing)
         {
-            context.playerController.movementVelocity.x = context.playerController.movementDirection.x * context.playerController.movementSpeed;
-            context.playerController.movementVelocity.z = context.playerController.movementDirection.z * context.playerController.movementSpeed;
+            context.playerController.playerVelocity.x = context.playerController.movementDirection.x * context.playerController.movementSpeed;
+            context.playerController.playerVelocity.z = context.playerController.movementDirection.z * context.playerController.movementSpeed;
         }
 
-        context.playerController.characterController.Move(context.playerController.movementVelocity * Time.deltaTime);
+        context.playerController.characterController.Move(context.playerController.playerVelocity * Time.deltaTime);
     }
 }
