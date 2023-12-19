@@ -4,6 +4,7 @@ public class SlamState : PlayerState
 {
     public override void Enter(PlayerStateMachine context)
     {
+        context.playerController.IsSliding = true;
         PerformSlam(context);
     }
 
@@ -16,10 +17,14 @@ public class SlamState : PlayerState
     }
     public override void CheckIfSwitchState(PlayerStateMachine context)
     {
-        if (context.playerController.IsGrounded)
+        if (context.playerController.IsGrounded && context.playerController.IsSliding)
         {
             context.TransitionTo(new SlideState());
-        }
+        } 
+        else if (context.playerController.IsGrounded)
+        {
+            context.TransitionTo(new GroundedState());
+        } 
     }
     private void PerformSlam(PlayerStateMachine context)
     {

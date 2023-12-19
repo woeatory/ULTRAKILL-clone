@@ -50,7 +50,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void OnSlide(InputAction.CallbackContext context)
     {
-        if (!playerController.IsGrounded)
+        if (playerController.PlayerStateMachine.CurrentPlayerState is AerialState)
         {
             playerController.PlayerStateMachine.TransitionTo(new SlamState());
         }
