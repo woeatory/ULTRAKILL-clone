@@ -1,14 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputManager), typeof(PlayerInputManager), typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Component References")]
-    [SerializeField] PlayerInputManager playerInputManager;
     private PlayerStateMachine playerStateMachine;
     public CharacterController characterController;
-    private GameObject foot;
+    public PlayerLook playerLook;
     // Movement
     public Vector3 movementDirection;
     public Vector3 playerVelocity;
@@ -34,8 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerInputManager = GetComponent<PlayerInputManager>();
-        foot = GameObject.Find("Foot");
+        playerLook = GetComponent<PlayerLook>();
         characterController = GetComponent<CharacterController>();
         playerStateMachine = new PlayerStateMachine(this);
     }

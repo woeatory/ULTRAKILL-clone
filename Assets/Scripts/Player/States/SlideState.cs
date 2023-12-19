@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class SlideState : PlayerState
 {
+    private Vector3 slideDirection;
     public override void Enter(PlayerStateMachine context)
     {
         context.playerController.IsSliding = true;
+        slideDirection = context.playerController.transform.forward;
     }
 
     public override void Exit(PlayerStateMachine context) { }
@@ -24,10 +26,9 @@ public class SlideState : PlayerState
     }
     private void PerformSlide(PlayerStateMachine context)
     {
-        Vector3 slideDirection = context.playerController.transform.forward;
         context.playerController.playerVelocity = slideDirection;
         ApplyGravity(context);
-        context.playerController.characterController.Move(context.playerController.playerVelocity * context.playerController.slideSpeed * Time.deltaTime);
+        context.playerController.characterController.Move(context.playerController.slideSpeed * Time.deltaTime * context.playerController.playerVelocity);
     }
     private void ApplyGravity(PlayerStateMachine context)
     {

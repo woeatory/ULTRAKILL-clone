@@ -8,6 +8,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] float xSensitivity = 5f;
     [SerializeField] float ySensitivity = 5f;
     private Camera mainCamera;
+    public Camera MainCamera => mainCamera;
     private float xMousePos, yMousePos, xRotation = 0f;
     private const float MIN_CLAMP = -90f;
     private const float MAX_CLAMP = 90f;
