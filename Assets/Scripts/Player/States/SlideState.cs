@@ -1,30 +1,30 @@
 using UnityEngine;
 
-public class SlideState : PlayerState
+public class SlideState : IPlayerState
 {
     private Vector3 slideDirection;
-    public override void Enter(PlayerStateMachine context)
+    public void Enter(PlayerStateMachine context)
     {
         context.playerController.IsSliding = true;
         slideDirection = context.playerController.transform.forward;
     }
 
-    public override void Exit(PlayerStateMachine context) { }
+    public void Exit(PlayerStateMachine context) { }
 
-    public override void Update(PlayerStateMachine context)
+    public void Update(PlayerStateMachine context)
     {
         CheckIfSwitchState(context);
-        PerformSlide(context);
+        MoveCharacter(context);
     }
 
-    public override void CheckIfSwitchState(PlayerStateMachine context)
+    public void CheckIfSwitchState(PlayerStateMachine context)
     {
         if (!context.playerController.IsSliding)
         {
             context.TransitionTo(new GroundedState());
         }
     }
-    private void PerformSlide(PlayerStateMachine context)
+    public void MoveCharacter(PlayerStateMachine context)
     {
         context.playerController.playerVelocity = slideDirection;
         ApplyGravity(context);

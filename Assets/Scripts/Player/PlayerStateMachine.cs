@@ -1,21 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStateMachine
 {
     public PlayerController playerController;
 
-    public PlayerState CurrentPlayerState { get; set; }
-    public event Action<PlayerState> stateChanged;
+    public IPlayerState CurrentPlayerState { get; set; }
+    public event Action<IPlayerState> stateChanged;
     
     public PlayerStateMachine(PlayerController playerController)
     {
         this.playerController = playerController;
         Initialize(new GroundedState());
     }
-    public void Initialize(PlayerState playerState)
+    public void Initialize(IPlayerState playerState)
     {
         CurrentPlayerState = playerState;
         playerState.Enter(this);
@@ -23,7 +20,7 @@ public class PlayerStateMachine
         // notify other objects that state has changed
         stateChanged?.Invoke(playerState);
     }
-    public void TransitionTo(PlayerState nextState)
+    public void TransitionTo(IPlayerState nextState)
     {
         CurrentPlayerState.Exit(this);
         CurrentPlayerState = nextState;

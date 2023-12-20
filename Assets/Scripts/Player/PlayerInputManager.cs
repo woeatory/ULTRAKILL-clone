@@ -36,7 +36,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("Jump pressed");
             if (playerController.characterController.isGrounded)
             {
                 playerController.PlayerStateMachine.TransitionTo(new JumpState());

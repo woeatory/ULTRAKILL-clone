@@ -1,7 +1,8 @@
-public abstract class PlayerState
+public interface IPlayerState
 {
-    public abstract void Enter(PlayerStateMachine context);
-    public abstract void Exit(PlayerStateMachine context);
-    public abstract void Update(PlayerStateMachine context);
-    public abstract void CheckIfSwitchState(PlayerStateMachine context);
+    public void Enter(PlayerStateMachine context);
+    public void Exit(PlayerStateMachine context);
+    public void Update(PlayerStateMachine context);
+    public void MoveCharacter(PlayerStateMachine context);
+    public void CheckIfSwitchState(PlayerStateMachine context);
 }

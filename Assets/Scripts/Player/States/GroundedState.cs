@@ -1,27 +1,27 @@
 using UnityEngine;
 
-public class GroundedState : PlayerState
+public class GroundedState : IPlayerState
 {
-    public override void Enter(PlayerStateMachine context)
+    public void Enter(PlayerStateMachine context)
     {
         context.playerController.playerVelocity.y = context.playerController.GroundedYAxixVelocity;
     }
 
-    public override void Exit(PlayerStateMachine context) { }
+    public void Exit(PlayerStateMachine context) { }
 
-    public override void Update(PlayerStateMachine context)
+    public void Update(PlayerStateMachine context)
     {
         CheckIfSwitchState(context);
         MoveCharacter(context);
     }
-    public override void CheckIfSwitchState(PlayerStateMachine context)
+    public void CheckIfSwitchState(PlayerStateMachine context)
     {
         if (!context.playerController.IsGrounded)
         {
             context.TransitionTo(new AerialState());
         }
     }
-    private void MoveCharacter(PlayerStateMachine context)
+    public void MoveCharacter(PlayerStateMachine context)
     {
         if (!context.playerController.IsDashing)
         {

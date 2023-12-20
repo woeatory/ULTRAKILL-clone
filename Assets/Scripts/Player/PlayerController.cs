@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     // Movement
     public Vector3 movementDirection;
     public Vector3 playerVelocity;
+    public Vector3 slideDirection;
 
     private Vector2 mouseLookDirection;
     [Header("Movement Settings")]
@@ -20,11 +21,13 @@ public class PlayerController : MonoBehaviour
     public float jumpMultiplier = -3f;
     public float slamForce = 25f;
     public float slideSpeed = 20f;
-    public float GroundedYAxixVelocity {get;} = -2f;
+    public float GroundedYAxixVelocity { get; } = -2f;
     public PlayerStateMachine PlayerStateMachine => playerStateMachine;
     public bool IsGrounded => characterController.isGrounded;
-    [SerializeField] public bool IsDashing { get; set; }
-    [SerializeField] public bool IsSliding;
+    public bool IsDashing { get; set; }
+    public bool IsSliding { get; set; }
+    public bool IsWallSliding { get; set; }
+    public int wallJumpCounter = 3;
     public int dashCounter = 3;
     [SerializeField] float dashDuration = 0.35f;
     [SerializeField] float dashDistance = 25f;
@@ -77,5 +80,5 @@ public class PlayerController : MonoBehaviour
         dashCounter++;
     }
 
-    
+
 }
